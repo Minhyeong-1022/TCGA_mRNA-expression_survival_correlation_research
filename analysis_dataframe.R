@@ -38,7 +38,7 @@ for (i in selected.index) {
 km = survfit(Surv(data.kaplan$time,data.kaplan$event) ~as.factor(data.kaplan$group)) # draw kaplan meier plot
 plot(km,col=c(1,2))
 lLab = c("mRNA High","mRNA Low")  ## legend labels
-legend("topright",legend=lLab,col=1:2,lty=1:1,horiz=FALSE)
+legend("topright",legend=lLab,col=1:2,lty=1:1,horiz=FALSE,,bty='n')
 
 
 #--- Calculate R squared and generate scatter plot ---#
