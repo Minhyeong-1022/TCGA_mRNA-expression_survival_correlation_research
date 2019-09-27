@@ -1,17 +1,11 @@
 if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
 BiocManager::install("RTCGAToolbox", version = "3.8")
 install.packages("stringi")
-install.packages("rgl")
-install.packages("vioplot")
 
-library(plyr)
-library(rgl)
-library(vioplot)
 library(stringi)
-library(survival)
 library(RTCGAToolbox)
 
-cancer.type = "SKCM"  # Set Parameter
+cancer.type = "LIHC"  #Parameter
 
 lastRunDate <- getFirehoseRunningDates()[1]
 caller.v = getFirehoseData (dataset=cancer.type, runDate=lastRunDate,
@@ -31,9 +25,8 @@ clinical.survival[death.index] = sheet.clinical$days_to_death[death.index]
 clinical.status = sheet.clinical$vital_status
 clinical.data.frame = as.data.frame(cbind(patient.names,clinical.status,clinical.survival)) 
 
-rna.surv.list = list() # to store of expression and survival each genes 
+rna.surv.list = list()
 rna.surv.list.kaplan = list()
-m.diff = c()
 correlation = c()
 p.value = c()
 
@@ -51,9 +44,14 @@ for (i in 1:length(gene.names)) {
   analysis.sheet = cbind(mRNAexp,survival_time)
   analysis.sheet = na.omit(analysis.sheet)
   
-  correlation.test = cor.test(analysis.sheet[,1],analysis.sheet[,2])
-  correlation[i] = correlation.test$estimate
-  p.value[i] = correlation.test$p.value
+  if(mean(mRNAexp) > 0) {
+    correlation.test = cor.test(analysis.sheet[,1],analysis.sheet[,2])
+    correlation[i] = correlation.test$estimate
+    p.value[i] = correlation.test$p.value
+  } else {
+    correlation[i] = NA
+    p.value[i] = NA
+  }
 }
 
 for (i in 1:length(gene.names)) {
@@ -71,7 +69,6 @@ for (i in 1:length(gene.names)) {
 }
 
 result.analysis = as.data.frame(cbind(gene.names,correlation,p.value))
-#result.analysis$m.diff = as.numeric(as.character(result.analysis$m.diff))
 result.analysis$correlation = as.numeric(as.character(result.analysis$correlation))
 result.analysis$p.value = as.numeric(as.character(result.analysis$p.value))
 colnames(result.analysis) = c('gene.names','correlation','p.value')
