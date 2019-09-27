@@ -26,5 +26,8 @@ abline(reg=fit) # draw scatter plot
 
 stat = summary(fit)
 stat$r.squared # print R squared value
+length(patient.names) # Patients in study
+nrow(data.final) # Genes in study
+nrow(data.final[data.final$Raw.p.value < 0.01,]) # raw Genes with p<0.01
 
 #--- End of whole code ---#
