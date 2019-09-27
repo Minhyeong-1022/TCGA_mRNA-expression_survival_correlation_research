@@ -1,4 +1,7 @@
 
+
+#--- Filter genes by cox coefficient, top 100 or bottom 100 ---#
+
 data.cor = result.analysis
 colnames(data.cor) = c('TCGA.Name','correlation','cor.p.value')
 
@@ -9,6 +12,8 @@ data.final = merge(data.cor,data.cox,by='TCGA.Name',all=FALSE)
 top.results = tail(arrange(data.final,desc(Cox.coefficient)),n=100) # set arrange method for analysis (tail or head)
 top.genes.index = match(top.results$TCGA.Name,gene.names)
 
+
+#--- Generate kaplan meier plot with selected index ---#
 
 selected.index = c()
 for (i in top.genes.index) {
@@ -29,14 +34,18 @@ for (i in selected.index) {
 km = survfit(Surv(data.kaplan$time,data.kaplan$event) ~as.factor(data.kaplan$group)) # draw kaplan meier plot
 plot(km,col=c(1,2))
 
-title(main = 'Filtered by Cox - OV')
 
-###################
+#--- Calculate R squared and generate scatter plot ---#
 
-plot(data.final$correlation,data.final$Cox.coefficient)
 fit =  lm(correlation~Cox.coefficient,data.final)
+plot(data.final$correlation,data.final$Cox.coefficient,
+     xlab = '',ylab = '',
+     pch = 20, col='steelblue')
+abline(reg=fit) # draw scatter plot
+
 stat = summary(fit)
-stat
+stat$r.squared # print R squared value
+
 
 
 
