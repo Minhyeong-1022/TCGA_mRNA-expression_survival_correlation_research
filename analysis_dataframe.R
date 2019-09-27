@@ -1,11 +1,15 @@
+library(survival)
+
+
+#--- Set cox file which is matched to cancer type of dataframe ---#
+
+data.cox = read.csv("C:/Users/Minhy/Desktop/DATA/skcm_cox.csv") 
 
 
 #--- Filter genes by cox coefficient, top 100 or bottom 100 ---#
 
 data.cor = result.analysis
 colnames(data.cor) = c('TCGA.Name','correlation','cor.p.value')
-
-data.cox = read.csv("C:/Users/Minhy/Desktop/DATA/skcm_cox.csv") # set file which is matched to cancer type of dataframe
 
 data.final = merge(data.cor,data.cox,by='TCGA.Name',all=FALSE)
 
@@ -47,6 +51,6 @@ stat = summary(fit)
 stat$r.squared # print R squared value
 
 
-
+#--- End of whole code ---#
 
 
