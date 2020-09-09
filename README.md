@@ -2,9 +2,9 @@
 
 This is supplemental git-hub page for research article :
 
-Lee, M. Investigating Strength that Comprehensive mRNA Expression Level of Prognostic Genes Influences on Patient Survival for Every Cancer Type. Preprints 2019, 2019120183 (doi: 10.20944/preprints201912.0183.v1).
+Cite: Lee, M. Investigating the Influence of the Comprehensive mRNA Expression Levels of Prognostic Genes on Patient Survival in Every Type of Cancer. Preprints 2019, 2019120183 (doi: 10.20944/preprints201912.0183.v2).
 
-preprint url : https://www.preprints.org/manuscript/201912.0183/v1
+preprint url : https://www.preprints.org/manuscript/201912.0183/v2
 
 
 Cox table used in this analysis can be downloaded
